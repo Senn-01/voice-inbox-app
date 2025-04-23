@@ -1,0 +1,56 @@
+{% if items %}
+<h2>Your Inbox ({{ items|length }} items)</h2>
+<div class="grid">
+    {% for item in items %}
+    <article class="{{ 'pending' if item.pending else 'classified' }}" 
+             x-data="{ showAudio: false }">
+        <header>
+            <small>{{ item.created_at }}</small>
+            {% if item.tag %}
+            <span class="tag">{{ item.tag }}</span>
+            {% endif %}
+        </header>
+        
+        <p>{{ item.text }}</p>
+        
+        {% if item.audio_url %}
+        <button @click="showAudio = !showAudio" class="outline secondary small">
+            <span x-text="showAudio ? 'Hide Audio' : 'Show Audio'"></span>
+        </button>
+        <audio x-show="showAudio" controls>
+            <source src="{{ item.audio_url }}" type="audio/m4a">
+            Your browser does not support the audio element.
+        </audio>
+        {% endif %}
+        
+        <footer>
+            <div class="actions">
+                {% if item.pending %}
+                <button class="small"
+                        hx-post="/classify/{{ item.id }}"
+                        hx-swap="none"
+                        hx-on::after-request="document.getElementById('items-container').innerHTML = ''; htmx.trigger('#items-container', 'load')">
+                    Classify
+                </button>
+                {% endif %}
+                
+                {% if not item.pending %}
+                <button class="small secondary outline"
+                        hx-put="/items/{{ item.id }}"
+                        hx-vals='{"pending": 1}'
+                        hx-swap="none"
+                        hx-on::after-request="document.getElementById('items-container').innerHTML = ''; htmx.trigger('#items-container', 'load')">
+                    Mark Pending
+                </button>
+                {% endif %}
+            </div>
+        </footer>
+    </article>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty">
+    <h2>Your inbox is empty</h2>
+    <p>Use the app to record voice notes or add notes manually above</p>
+</div>
+{% endif %} 

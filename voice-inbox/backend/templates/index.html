@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Inbox</title>
+    <!-- HTMX for AJAX -->
+    <script src="https://unpkg.com/htmx.org@1.9.8"></script>
+    <!-- Alpine.js for interactivity -->
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <!-- Pico.css for styling -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <style>
+        .pending { background-color: rgba(255, 193, 7, 0.1); }
+        .classified { background-color: rgba(40, 167, 69, 0.1); }
+        .tag { 
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 1rem;
+            background-color: #e9ecef;
+            font-size: 0.8rem;
+        }
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .actions button {
+            margin: 0;
+            padding: 0.3rem 0.6rem;
+        }
+        audio {
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body class="container">
+    <header>
+        <h1>Voice Inbox</h1>
+        <p>Capture, transcribe, and organize your thoughts</p>
+    </header>
+
+    <main x-data="{ showForm: false }">
+        <!-- Manual entry form (for testing) -->
+        <div>
+            <button @click="showForm = !showForm" class="secondary">
+                <span x-text="showForm ? 'Hide Form' : 'Add Manual Note'"></span>
+            </button>
+            
+            <form x-show="showForm" hx-post="/inbox" hx-swap="none" hx-on::after-request="showForm = false; document.getElementById('items-container').innerHTML = ''; htmx.trigger('#items-container', 'load')">
+                <div class="grid">
+                    <label for="text">
+                        Note Text
+                        <textarea id="text" name="text" required></textarea>
+                    </label>
+                </div>
+                <button type="submit">Add Note</button>
+            </form>
+        </div>
+
+        <hr>
+
+        <!-- Items container -->
+        <div id="items-container" hx-get="/items" hx-trigger="load"></div>
+    </main>
+
+    <footer>
+        <small>&copy; 2023 Voice Inbox App</small>
+    </footer>
+</body>
+</html> 
