@@ -2,6 +2,10 @@
 
 [Roadmap](projectRoadmap.md) | [Task](currentTask.md) | [Stack](techStack.md) | [Summary](codebaseSummary.md)
 
+## Repository
+
+[GitHub Repository](https://github.com/Senn-01/voice-inbox-app)
+
 ## Current Objective
 
 Set up the project structure and implement the MVP components:

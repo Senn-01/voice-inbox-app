@@ -2,6 +2,8 @@
 
 Capture voice thoughts on iOS, auto-transcribe, then triage from a ultra-thin FastAPI + SQLite web UI.
 
+**GitHub Repository**: [https://github.com/Senn-01/voice-inbox-app](https://github.com/Senn-01/voice-inbox-app)
+
 ## Project Structure
 
 - **`backend/`**: FastAPI server with SQLite database
