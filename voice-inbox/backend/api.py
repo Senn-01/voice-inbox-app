@@ -11,6 +11,7 @@ from pathlib import Path
 import datetime
 from openai import OpenAI, OpenAIError
 from dotenv import load_dotenv
+import whisper  # Import whisper for local transcription
 
 # Import database functions
 from database import get_db_connection, get_all_items, get_item_by_id, insert_item, update_item
@@ -36,6 +37,16 @@ templates = Jinja2Templates(directory="templates")
 
 # Mount audio directory for direct file access
 app.mount("/audio", StaticFiles(directory=AUDIO_DIR), name="audio")
+
+# Load Whisper model (tiny version) - this happens once at startup
+# Using tiny model for speed and resource efficiency
+try:
+    print("Loading Whisper model...")
+    whisper_model = whisper.load_model("tiny")
+    print("Whisper model loaded successfully")
+except Exception as e:
+    print(f"Error loading Whisper model: {e}")
+    whisper_model = None
 
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
@@ -136,6 +147,36 @@ async def update_inbox_item(
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error updating item: {str(e)}")
+
+@app.post("/transcribe")
+async def transcribe_audio(audio: UploadFile):
+    """Transcribe audio file using Whisper model."""
+    try:
+        # Check if model is loaded
+        if whisper_model is None:
+            raise HTTPException(status_code=500, detail="Whisper model not loaded")
+        
+        # Create a temporary file to save the uploaded audio
+        temp_audio_path = f"temp_audio_{uuid.uuid4()}.wav"
+        
+        with open(temp_audio_path, "wb") as temp_file:
+            # Copy audio content to temp file
+            shutil.copyfileobj(audio.file, temp_file)
+        
+        # Transcribe the audio
+        result = whisper_model.transcribe(temp_audio_path)
+        
+        # Delete the temporary file
+        if os.path.exists(temp_audio_path):
+            os.remove(temp_audio_path)
+        
+        # Return the transcription result
+        return {"text": result["text"]}
+    
+    except Exception as e:
+        if os.path.exists(temp_audio_path):
+            os.remove(temp_audio_path)  # Clean up in case of error
+        raise HTTPException(status_code=500, detail=f"Error transcribing audio: {str(e)}")
 
 if __name__ == "__main__":
     import uvicorn

@@ -40,8 +40,9 @@ voice-inbox/
    - SwiftUI updates UI state via ViewModel
 
 2. **Transcribe**
-   - Whisper-tiny Core ML transcribes audio on-device
-   - Falls back to OpenAI API if needed
+   - iOS app sends audio file to backend `/transcribe` endpoint
+   - Backend uses Whisper to transcribe audio
+   - Transcription result returned to iOS app
    - Text stored in local SQLite via GRDB
 
 3. **Persist**
@@ -58,8 +59,8 @@ voice-inbox/
 
 | Dependency | Purpose | Source |
 |------------|---------|--------|
-| OpenAI API | Transcription fallback, classification | openai.com |
-| Whisper-tiny | On-device transcription | huggingface.co |
+| OpenAI API | Classification | openai.com |
+| Whisper | Backend transcription | github.com/openai/whisper |
 | HTMX | HTML-based AJAX | htmx.org |
 | Alpine.js | Minimal JavaScript framework | alpinejs.dev |
 | GRDB | Swift SQLite wrapper | github.com/groue/GRDB.swift |
@@ -72,3 +73,22 @@ voice-inbox/
 
 ## Version History
 - 2023-07-17  v0.1  Initial codebase structure documentation 
+
+## Deployment
+
+### Backend API
+- Deployed to Fly.io at `https://voice-inbox-api.fly.dev/`
+- Current deployed version does not include Whisper transcription (pending update)
+- Using Docker containerization
+- 1GB persistent volume for SQLite database storage
+- Environment variables configured via Fly.io secrets
+- Deployment steps documented in `currentTask.md`
+
+### iOS App
+- Will be distributed via TestFlight for testing
+- Production distribution will use App Store Connect
+
+### Monitoring
+- Basic logging implemented via Fly.io built-in logs
+- Can view logs with `fly logs` command
+- Health check endpoint at `/health` 

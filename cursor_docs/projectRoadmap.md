@@ -18,14 +18,15 @@ Create a streamlined voice capture and triage system with:
 | **iOS App Structure** | SwiftUI recording interface + Services | ✅ Complete | Basic UI and recording functionality |
 | **iOS Core Features** | Local database with GRDB + Sync Service | ✅ Complete | SQLite storage and sync mechanism |
 | **Testing & Deployment** | Backend tests and deployment config | ✅ Complete | Pytest and Fly.io configuration |
-| **Final Implementation** | Deploy and integrate Whisper | 🔄 In Progress | Deploying to Fly.io and CoreML integration |
+| **Final Implementation** | Deploy to Fly.io | ✅ Complete | Backend live at https://voice-inbox-api.fly.dev/ |
+| **Core ML Integration** | Whisper-tiny Core ML | 🔄 In Progress | Implementing offline transcription |
 | **Release** | Final testing and documentation | 📅 Planned | Preparing for v1.0.0 |
 
 ## Completion Criteria
 
 **MVP Release:**
 - iOS app can record voice memos
-- Local Whisper-tiny transcription with OpenAI fallback
+- Server-side Whisper transcription
 - FastAPI backend with SQLite storage
 - Basic HTMX + Alpine.js web interface
 - Docker deployment ready
@@ -40,8 +41,9 @@ Create a streamlined voice capture and triage system with:
 - ✅ Synchronization service
 - ✅ Testing with pytest for backend
 - ✅ Deployment configuration for Fly.io
-- 🔄 Deployment to Fly.io
-- 🔄 Whisper-tiny Core ML integration
+- ✅ Deployment to Fly.io (https://voice-inbox-api.fly.dev/)
+- ✅ Backend Whisper transcription endpoint
+- 🔄 iOS integration with backend transcription
 
 ## Deployment Instructions
 

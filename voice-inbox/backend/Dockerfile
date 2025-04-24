@@ -1,10 +1,18 @@
-FROM python:3.12-slim
+FROM python:3.11-slim
 
 WORKDIR /app
+
+# Install git and other dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first for better caching
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+# Install the OpenAI whisper package directly from GitHub
+RUN pip uninstall -y whisper && pip install git+https://github.com/openai/whisper.git
 
 # Copy the rest of the application
 COPY . .

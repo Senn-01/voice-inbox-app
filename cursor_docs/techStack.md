@@ -8,7 +8,7 @@
 |-------|------------|---------|
 | **Mobile App** | SwiftUI + Combine | iOS 15+ |
 | **Mobile DB** | SQLite via GRDB | 6.x |
-| **Transcription** | Whisper-tiny Core ML + OpenAI API | CoreML 3.0+ |
+| **Transcription** | Whisper (backend) | Latest |
 | **Backend** | FastAPI | 0.111.0 |
 | **Server DB** | SQLite | 3.x |
 | **LLM** | OpenAI API (GPT-4.1-mini) | Latest |
@@ -26,8 +26,9 @@
 
 2. **Backend**:
    - FastAPI for API endpoints
+   - Whisper for speech-to-text transcription
    - SQLite for data storage
-   - OpenAI API for transcription fallback and classification
+   - OpenAI API for classification
    - HTMX + Alpine.js for web UI
 
 3. **Deployment**:
@@ -39,7 +40,7 @@
 | Date | Decision | Alternatives | Reasoning |
 |------|----------|--------------|-----------|
 | 2023-07-17 | SQLite for backend | PostgreSQL, Supabase | Simplicity for MVP; single-user focused; zero-config |
-| 2023-07-17 | Whisper-tiny Core ML | Full OpenAI API | Offline-first approach; reduced API costs; privacy |
+| 2023-07-17 | Backend Whisper | Whisper-tiny Core ML | Simpler iOS app; consistent transcriptions; less device battery usage |
 | 2023-07-17 | HTMX + Alpine.js | React, Vue | No build step; simpler development; lighter-weight |
 | 2023-07-17 | FastAPI | Flask, Django | Async support; modern API design; type hints |
 | 2023-07-17 | Fly.io | Heroku, Vercel | Simple deployment; volume support for SQLite persistence |

@@ -10,21 +10,11 @@ enum APIError: Error {
 class APIService {
     static let shared = APIService()
     
-    private let baseURL = "http://localhost:8000" // Change to your actual server URL
+    let baseURL = "https://voice-inbox-api.fly.dev"
     
     private init() {}
     
     func uploadRecording(_ recording: Recording, audioURL: URL) async throws {
-        // In a real implementation, we would:
-        // 1. Create a multipart form data request
-        // 2. Attach the audio file and text
-        // 3. Send to the server
-        
-        // For now, just simulate a successful upload with a delay
-        try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second delay
-        
-        // In a real app, this would be the implementation:
-        /*
         let url = URL(string: "\(baseURL)/inbox")!
         
         // Create multipart form data
@@ -69,19 +59,9 @@ class APIService {
             let errorMessage = String(data: responseData, encoding: .utf8) ?? "Unknown error"
             throw APIError.serverError(errorMessage)
         }
-        */
     }
     
     func fetchRecentRecordings() async throws -> [Recording] {
-        // In a real implementation, we would:
-        // 1. Make a GET request to the server
-        // 2. Decode the response into Recording objects
-        
-        // For now, just return an empty array
-        return []
-        
-        // In a real app, this would be the implementation:
-        /*
         let url = URL(string: "\(baseURL)/items")!
         
         let (data, response) = try await URLSession.shared.data(from: url)
@@ -101,6 +81,5 @@ class APIService {
         } catch {
             throw APIError.decodingError
         }
-        */
     }
 } 

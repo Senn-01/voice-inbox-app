@@ -49,8 +49,9 @@ We're starting from the project specification in `Project-spec.md` and implement
    - [x] Add Fly.io configuration
 
 4. **Final Steps** (Current Focus)
-   - [ ] Deploy to Fly.io
-   - [ ] Implement Whisper-tiny Core ML integration
+   - [x] Deploy to Fly.io
+   - [x] Update backend for Whisper transcription
+   - [ ] Update iOS app to use backend transcription
    - [ ] Test full system with real data
    - [ ] Final documentation updates
 
@@ -60,26 +61,27 @@ The backend implementation has been completed with the following features:
 - FastAPI server with SQLite database
 - `/inbox` endpoint for adding new items
 - `/classify/{item_id}` endpoint for GPT-4.1 classification
+- `/transcribe` endpoint for audio transcription using Whisper
 - Basic HTMX + Alpine.js web interface
 - Docker configuration for deployment
 - Tests with pytest
-- Fly.io deployment configuration
+- Successfully deployed to Fly.io at https://voice-inbox-api.fly.dev/ (older version)
 
 iOS app has been fully structured with:
 - Basic SwiftUI interface with recording button
 - RecorderViewModel to handle audio recording
-- TranscriptionService with placeholder implementation
-- APIService with placeholder implementation
+- TranscriptionService updated to use backend API
+- APIService implementation for backend communication
 - DatabaseService using GRDB for local SQLite storage
 - SyncService to handle synchronization with the backend
 - UI updated to show sync status and controls
 - Unit tests for database operations
 
-The next step is to deploy the backend to Fly.io and finalize the iOS app by implementing the Whisper-tiny Core ML integration.
+The next focus is deploying the updated backend with Whisper transcription to Fly.io and testing the full recording-to-transcription flow.
 
 ## Deployment Instructions
 
-To deploy the backend to Fly.io:
+The initial version of the backend has been deployed to Fly.io. For reference, the deployment steps were:
 
 1. Install the Fly CLI: `brew install flyctl`
 2. Login to Fly: `fly auth login`
@@ -88,9 +90,15 @@ To deploy the backend to Fly.io:
 5. Deploy the app: `fly deploy`
 6. Set the OpenAI API key: `fly secrets set OPENAI_API_KEY=your_key_here`
 
+To deploy the updated version with Whisper transcription:
+1. Push changes to GitHub: `git add . && git commit -m "Add backend transcription with Whisper" && git push`
+2. Deploy to Fly.io: `cd voice-inbox/backend && fly deploy`
+
 ## Version History
 - 2023-07-17  v0.1  Initial task list created
 - 2023-07-17  v0.2  Updated with backend implementation progress
 - 2023-07-17  v0.3  Updated with iOS app structure progress
 - 2023-07-17  v0.4  Updated with GRDB and sync service implementation
-- 2023-07-17  v0.5  Updated with testing and deployment progress 
+- 2023-07-17  v0.5  Updated with testing and deployment progress
+- 2023-07-18  v1.0  Updated with successful deployment to Fly.io
+- 2023-07-18  v1.1  Updated with backend transcription approach 
