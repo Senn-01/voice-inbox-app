@@ -32,7 +32,7 @@ We're starting from the project specification in `Project-spec.md` and implement
    - [x] Create HTMX + Alpine.js interface
    - [x] Create Dockerfile for deployment
 
-2. **iOS App** (Completed)
+2. **iOS App** (In Progress)
    - [x] Create Xcode project structure
    - [x] Implement recording functionality
    - [x] Add microphone permissions
@@ -41,17 +41,22 @@ We're starting from the project specification in `Project-spec.md` and implement
    - [x] Implement local database with GRDB
    - [x] Implement synchronization service
    - [x] Update UI to show sync status
+   - [ ] Fix GRDB build issues (blocker)
+   - [ ] Test with deployed backend API
 
 3. **Testing & Deployment** (Completed)
    - [x] Create backend tests with pytest
    - [x] Create iOS database tests
    - [x] Update database paths for deployment
    - [x] Add Fly.io configuration
+   - [x] Create detailed Fly.io deployment guide
 
 4. **Final Steps** (Current Focus)
    - [x] Deploy to Fly.io
    - [x] Update backend for Whisper transcription
-   - [ ] Update iOS app to use backend transcription
+   - [x] Create troubleshooting documentation for Fly.io deployment
+   - [x] Document existing iOS implementation status
+   - [ ] Resolve iOS GRDB build issues
    - [ ] Test full system with real data
    - [ ] Final documentation updates
 
@@ -66,6 +71,7 @@ The backend implementation has been completed with the following features:
 - Docker configuration for deployment
 - Tests with pytest
 - Successfully deployed to Fly.io at https://voice-inbox-api.fly.dev/
+- Created comprehensive Fly.io deployment guide with troubleshooting steps
 
 iOS app has been fully structured with:
 - Basic SwiftUI interface with recording button
@@ -77,7 +83,11 @@ iOS app has been fully structured with:
 - UI updated to show sync status and controls
 - Unit tests for database operations
 
-The next focus is testing the full recording-to-transcription flow using the deployed backend API.
+Current blockers:
+- GRDB build issues in the iOS app preventing successful compilation
+- Options to fix: use specific GRDB version (6.15.0) or switch to SQLite.swift
+
+The next focus is resolving the GRDB issues and testing the full recording-to-transcription flow using the deployed backend API.
 
 ## Deployment Instructions
 
@@ -86,27 +96,30 @@ The backend with Whisper transcription has been successfully deployed to Fly.io.
 1. Install the Fly CLI: `brew install flyctl`
 2. Login to Fly: `fly auth login`
 3. Navigate to the backend directory: `cd voice-inbox/backend`
-4. Create a volume for data persistence: `fly volumes create voice_inbox_data --size 1`
-5. Deploy the app: `fly deploy`
-6. Set the OpenAI API key: `fly secrets set OPENAI_API_KEY=your_key_here`
+4. Create a Fly app: `fly launch --name voice-inbox-api`
+5. Create a volume for data persistence: `fly volumes create voice_inbox_data --size 1 --app voice-inbox-api`
+6. Deploy the app: `fly deploy`
+7. Set the OpenAI API key: `fly secrets set OPENAI_API_KEY=your_key_here`
 
-If the app requires restarting:
-1. Check machine status: `fly machines list -a voice-inbox-api`
-2. Restart if needed: `fly machines restart <machine-id> -a voice-inbox-api`
+Detailed deployment instructions and troubleshooting steps are available in the [Fly.io Deployment Guide](flyioDeployment.md).
 
 ## Next Steps
 
-1. Test the transcription endpoint:
+1. Fix iOS build issues by:
+   - Using a specific version of GRDB (6.15.0)
+   - OR replacing GRDB with SQLite.swift
+
+2. Test the transcription endpoint:
    ```bash
    curl -F "audio=@sample.m4a" https://voice-inbox-api.fly.dev/transcribe
    ```
 
-2. Test from the iOS app:
+3. Test from the iOS app:
    - Launch the iOS app
    - Record audio
    - Verify it's sent to the backend for transcription
 
-3. Add monitoring and health checks:
+4. Add monitoring and health checks:
    - Consider adding a simple `/health` endpoint 
    - Set up basic logging and monitoring
 
@@ -118,4 +131,6 @@ If the app requires restarting:
 - 2023-07-17  v0.5  Updated with testing and deployment progress
 - 2023-07-18  v1.0  Updated with successful deployment to Fly.io
 - 2023-07-18  v1.1  Updated with backend transcription approach
-- 2023-07-18  v1.2  Updated with successful Whisper transcription deployment 
+- 2023-07-18  v1.2  Updated with successful Whisper transcription deployment
+- 2023-04-23  v1.3  Added Fly.io deployment guide and updated deployment instructions
+- 2023-04-23  v1.4  Documented existing iOS app implementation and current issues 

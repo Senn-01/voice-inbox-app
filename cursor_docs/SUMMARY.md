@@ -17,6 +17,12 @@
 - [Project Specification](Project-spec.md) - Original project requirements
 - [Implementation Advice](advices.md) - Development notes and warnings
 
+## Deployment Guides
+
+- [Fly.io Deployment](flyioDeployment.md) - Step-by-step guide to deploy on Fly.io
+- [iOS Implementation Status](iosImplementationStatus.md) - Current state of iOS app and next steps
+- [iOS Build Fix Guide](iosBuildFix.md) - Solutions for GRDB build issues
+
 ## Deployment Information
 
 - Backend API: https://voice-inbox-api.fly.dev/
@@ -25,4 +31,7 @@
 
 ## Version History
 - 2023-07-17  v0.1  Initial documentation index
-- 2023-07-18  v0.2  Added deployment information 
+- 2023-07-18  v0.2  Added deployment information
+- 2023-04-23  v0.3  Added Fly.io deployment guide
+- 2023-04-23  v0.4  Added iOS implementation status
+- 2023-04-23  v0.5  Added iOS build fix guide 
