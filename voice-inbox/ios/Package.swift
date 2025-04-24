@@ -12,14 +12,14 @@ let package = Package(
             targets: ["VoiceInbox"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/groue/GRDB.swift.git", from: "6.0.0"),
+        .package(url: "https://github.com/stephencelis/SQLite.swift.git", from: "0.14.1"),
         .package(url: "https://github.com/openai/openai-swift.git", from: "1.0.0")
     ],
     targets: [
         .target(
             name: "VoiceInbox",
             dependencies: [
-                .product(name: "GRDB", package: "GRDB.swift"),
+                .product(name: "SQLite", package: "SQLite.swift"),
                 .product(name: "OpenAI", package: "openai-swift")
             ],
             path: "VoiceInbox"),
