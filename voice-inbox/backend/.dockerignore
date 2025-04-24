@@ -1,0 +1,29 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env/
+env/
+
+# Git directories
+.git/
+.github/
+
+# IDE files
+.vscode/
+.idea/
+
+# Local development files
+*.log
+.DS_Store
+
+# Test files and directories
+test_*.py
+tests/
+
+# Temporary files
+temp_*
+tmp/ 

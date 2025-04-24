@@ -1,3 +1,15 @@
+"""
+Voice Inbox API - FastAPI Backend with Whisper Transcription
+
+This application provides endpoints for adding, retrieving, classifying,
+and transcribing voice notes. It uses a local Whisper model for transcription
+and OpenAI GPT-4.1-mini for classification.
+
+For deployment to Fly.io, use the included deploy-to-fly.sh script:
+    chmod +x deploy-to-fly.sh
+    ./deploy-to-fly.sh
+"""
+
 from fastapi import FastAPI, UploadFile, Form, HTTPException, Depends, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
