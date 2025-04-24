@@ -78,17 +78,32 @@ voice-inbox/
 
 ### Backend API
 - Deployed to Fly.io at `https://voice-inbox-api.fly.dev/`
-- Current deployed version does not include Whisper transcription (pending update)
-- Using Docker containerization
+- Complete with Whisper transcription endpoint
+- Using Docker containerization with Python 3.11
+- Includes FFmpeg for audio processing
 - 1GB persistent volume for SQLite database storage
 - Environment variables configured via Fly.io secrets
 - Deployment steps documented in `currentTask.md`
+- Potential issues and solutions documented in troubleshooting section
 
 ### iOS App
 - Will be distributed via TestFlight for testing
 - Production distribution will use App Store Connect
+- Currently configured to use backend transcription
 
 ### Monitoring
 - Basic logging implemented via Fly.io built-in logs
 - Can view logs with `fly logs` command
-- Health check endpoint at `/health` 
+- Health check endpoint planned
+
+## Troubleshooting
+
+### Fly.io Deployment
+- If app shows as "suspended": Use `fly apps restart <app-name>`
+- If machines show as "stopped": Use `fly machines start <machine-id>`
+- If deployment fails: Check logs with `fly logs`
+- Performance issues: Consider upgrading machine size
+
+## Version History
+- 2023-07-17  v0.1  Initial codebase structure documentation
+- 2023-07-18  v0.2  Updated with deployed backend information 

@@ -17,5 +17,12 @@
 - [Project Specification](Project-spec.md) - Original project requirements
 - [Implementation Advice](advices.md) - Development notes and warnings
 
+## Deployment Information
+
+- Backend API: https://voice-inbox-api.fly.dev/
+- Transcription API: https://voice-inbox-api.fly.dev/transcribe
+- Admin UI: https://voice-inbox-api.fly.dev/ (HTMX + Alpine.js web interface)
+
 ## Version History
-- 2023-07-17  v0.1  Initial documentation index 
+- 2023-07-17  v0.1  Initial documentation index
+- 2023-07-18  v0.2  Added deployment information 

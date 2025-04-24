@@ -18,8 +18,8 @@ Create a streamlined voice capture and triage system with:
 | **iOS App Structure** | SwiftUI recording interface + Services | ✅ Complete | Basic UI and recording functionality |
 | **iOS Core Features** | Local database with GRDB + Sync Service | ✅ Complete | SQLite storage and sync mechanism |
 | **Testing & Deployment** | Backend tests and deployment config | ✅ Complete | Pytest and Fly.io configuration |
-| **Final Implementation** | Deploy to Fly.io | ✅ Complete | Backend live at https://voice-inbox-api.fly.dev/ |
-| **Core ML Integration** | Whisper-tiny Core ML | 🔄 In Progress | Implementing offline transcription |
+| **Backend Transcription** | Whisper integration on server | ✅ Complete | Speech-to-text via API endpoint |
+| **Final Implementation** | iOS integration with backend | 🔄 In Progress | Using backend transcription service |
 | **Release** | Final testing and documentation | 📅 Planned | Preparing for v1.0.0 |
 
 ## Completion Criteria
@@ -43,11 +43,13 @@ Create a streamlined voice capture and triage system with:
 - ✅ Deployment configuration for Fly.io
 - ✅ Deployment to Fly.io (https://voice-inbox-api.fly.dev/)
 - ✅ Backend Whisper transcription endpoint
-- 🔄 iOS integration with backend transcription
+- 🔄 iOS integration with backend transcription testing
 
 ## Deployment Instructions
 
-To deploy the backend to Fly.io:
+The backend is deployed to Fly.io and can be accessed at https://voice-inbox-api.fly.dev/.
+
+For reference, the deployment steps were:
 
 1. Install the Fly CLI: `brew install flyctl`
 2. Login to Fly: `fly auth login`
@@ -55,6 +57,11 @@ To deploy the backend to Fly.io:
 4. Create a volume for data persistence: `fly volumes create voice_inbox_data --size 1`
 5. Deploy the app: `fly deploy`
 6. Set the OpenAI API key: `fly secrets set OPENAI_API_KEY=your_key_here`
+
+To manage deployment:
+- Check status: `fly status -a voice-inbox-api`
+- View logs: `fly logs -a voice-inbox-api`
+- Restart app: `fly apps restart voice-inbox-api`
 
 ## Next Steps after MVP
 
@@ -67,4 +74,5 @@ To deploy the backend to Fly.io:
 - 2023-07-17  v0.1  Initial roadmap based on project spec
 - 2023-07-17  v0.2  Updated with implementation progress
 - 2023-07-17  v0.3  Updated with GRDB and sync implementation
-- 2023-07-17  v0.4  Updated with testing and deployment progress 
+- 2023-07-17  v0.4  Updated with testing and deployment progress
+- 2023-07-18  v0.5  Updated with successful Whisper backend deployment 

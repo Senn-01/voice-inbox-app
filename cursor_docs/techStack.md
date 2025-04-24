@@ -8,12 +8,12 @@
 |-------|------------|---------|
 | **Mobile App** | SwiftUI + Combine | iOS 15+ |
 | **Mobile DB** | SQLite via GRDB | 6.x |
-| **Transcription** | Whisper (backend) | Latest |
+| **Transcription** | Whisper (backend) | OpenAI Whisper "tiny" |
 | **Backend** | FastAPI | 0.111.0 |
 | **Server DB** | SQLite | 3.x |
 | **LLM** | OpenAI API (GPT-4.1-mini) | Latest |
 | **Web UI** | HTMX + Alpine.js | 1.9.8, 3.x |
-| **Deployment** | Docker + Fly.io | Latest |
+| **Deployment** | Docker + Fly.io | Python 3.11 slim |
 
 ## Architecture Overview
 
@@ -23,6 +23,7 @@
    - AVAudioRecorder for voice capture
    - Combine for reactive programming
    - GRDB for SQLite interactions
+   - HTTP multipart/form-data for audio upload
 
 2. **Backend**:
    - FastAPI for API endpoints
@@ -30,6 +31,7 @@
    - SQLite for data storage
    - OpenAI API for classification
    - HTMX + Alpine.js for web UI
+   - FFmpeg for audio processing
 
 3. **Deployment**:
    - Docker containerization
@@ -44,6 +46,13 @@
 | 2023-07-17 | HTMX + Alpine.js | React, Vue | No build step; simpler development; lighter-weight |
 | 2023-07-17 | FastAPI | Flask, Django | Async support; modern API design; type hints |
 | 2023-07-17 | Fly.io | Heroku, Vercel | Simple deployment; volume support for SQLite persistence |
+| 2023-07-18 | Python 3.11 | Python 3.12 | Better compatibility with Whisper and dependencies |
+
+## Docker Configuration
+- Python 3.11 slim base image
+- FFmpeg for audio processing
+- Git for Whisper installation
+- 1GB memory allocation for transcription
 
 ## Security Considerations
 
@@ -53,4 +62,5 @@
 - SQLite database file permissions set appropriately
 
 ## Version History
-- 2023-07-17  v0.1  Initial tech stack documentation 
+- 2023-07-17  v0.1  Initial tech stack documentation
+- 2023-07-18  v0.2  Updated with deployed Whisper configuration 

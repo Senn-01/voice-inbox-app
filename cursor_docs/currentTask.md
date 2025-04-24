@@ -65,7 +65,7 @@ The backend implementation has been completed with the following features:
 - Basic HTMX + Alpine.js web interface
 - Docker configuration for deployment
 - Tests with pytest
-- Successfully deployed to Fly.io at https://voice-inbox-api.fly.dev/ (older version)
+- Successfully deployed to Fly.io at https://voice-inbox-api.fly.dev/
 
 iOS app has been fully structured with:
 - Basic SwiftUI interface with recording button
@@ -77,11 +77,11 @@ iOS app has been fully structured with:
 - UI updated to show sync status and controls
 - Unit tests for database operations
 
-The next focus is deploying the updated backend with Whisper transcription to Fly.io and testing the full recording-to-transcription flow.
+The next focus is testing the full recording-to-transcription flow using the deployed backend API.
 
 ## Deployment Instructions
 
-The initial version of the backend has been deployed to Fly.io. For reference, the deployment steps were:
+The backend with Whisper transcription has been successfully deployed to Fly.io. For reference, the deployment steps were:
 
 1. Install the Fly CLI: `brew install flyctl`
 2. Login to Fly: `fly auth login`
@@ -90,9 +90,25 @@ The initial version of the backend has been deployed to Fly.io. For reference, t
 5. Deploy the app: `fly deploy`
 6. Set the OpenAI API key: `fly secrets set OPENAI_API_KEY=your_key_here`
 
-To deploy the updated version with Whisper transcription:
-1. Push changes to GitHub: `git add . && git commit -m "Add backend transcription with Whisper" && git push`
-2. Deploy to Fly.io: `cd voice-inbox/backend && fly deploy`
+If the app requires restarting:
+1. Check machine status: `fly machines list -a voice-inbox-api`
+2. Restart if needed: `fly machines restart <machine-id> -a voice-inbox-api`
+
+## Next Steps
+
+1. Test the transcription endpoint:
+   ```bash
+   curl -F "audio=@sample.m4a" https://voice-inbox-api.fly.dev/transcribe
+   ```
+
+2. Test from the iOS app:
+   - Launch the iOS app
+   - Record audio
+   - Verify it's sent to the backend for transcription
+
+3. Add monitoring and health checks:
+   - Consider adding a simple `/health` endpoint 
+   - Set up basic logging and monitoring
 
 ## Version History
 - 2023-07-17  v0.1  Initial task list created
@@ -101,4 +117,5 @@ To deploy the updated version with Whisper transcription:
 - 2023-07-17  v0.4  Updated with GRDB and sync service implementation
 - 2023-07-17  v0.5  Updated with testing and deployment progress
 - 2023-07-18  v1.0  Updated with successful deployment to Fly.io
-- 2023-07-18  v1.1  Updated with backend transcription approach 
+- 2023-07-18  v1.1  Updated with backend transcription approach
+- 2023-07-18  v1.2  Updated with successful Whisper transcription deployment 
